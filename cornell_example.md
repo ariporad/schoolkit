@@ -1,4 +1,4 @@
-#### Ari Porad, Class, Teacher
+#### Class, Teacher
 
 # Title Goes Here
 

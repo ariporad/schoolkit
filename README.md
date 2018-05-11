@@ -31,7 +31,7 @@ I have to/like to take Cornell notes frequently, but I want to take notes in mar
 Here's the format in markdown:
 
 ```markdown
-#### Ari Porad, Class, Teacher
+#### Class, Teacher
 
 # Title Goes Here
 
@@ -44,7 +44,7 @@ This is a summary of the thing which I'm taking notes on. Blah Blah Blah.
 	* What do you get when you multiply six by nine?
 ```
 
-Here's the output (the date is added automagically):
+Here's the output (your name and the date are added automagically):
 
 ![Cornell Notes Example Output](cornell_example.png)
 
