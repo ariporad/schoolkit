@@ -1,0 +1,14 @@
+{
+  "name": "markdown-cornell",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^3.9.1",
+    "remark": "^8.0.0",
+    "remark-cli": "^4.0.0",
+    "remark-html": "^6.0.1",
+    "unist-util-is": "^2.1.1",
+    "unist-util-select": "^1.5.0"
+  }
+}
