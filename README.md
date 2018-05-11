@@ -22,6 +22,7 @@ sn new Adverbs # the subject can be ommited if you're already in the right dir
 sn ls # list notes
 sn latest # edit the latest note
 sn cornell [note.md] # render the note to HTML Cornell notes (defaults to latest note, see below)
+sn mla [note.md] # render the note to an MLA-formatted(ish) word document (defaults to latest note, see below)
 ```
 
 ## Cornell Notes
@@ -48,6 +49,9 @@ Here's the output (your name and the date are added automagically):
 
 ![Cornell Notes Example Output](cornell_example.png)
 
+## MLA Formatting
+
+I like to write things in markdown for many reasons, but the academic world really likes things to be turned in with the MLA format. To facilitate this, schoolkit contains a method to convert markdown to something very close to MLA. (It doesn't have the teacher's name or the class in the header, but is otherwise correct.)
 
 ## License
 [MIT License](https://ariporad.mit-license.org)

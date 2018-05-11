@@ -1,5 +1,3 @@
-const { execSync } = require('child_process');
-
 const CSS = `
 table {
 	border: none;
@@ -39,14 +37,6 @@ td > ul, td > ol {
 	font-family: 'Avenir Next', Arial, sans-serif;
 }
 `;
-
-function getRealName() {
-	if (process.platform !== 'darwin') return null; // This only works on mac
-	return execSync(
-		`dscl . -read "/Users/$(who am i | awk '{print $1}')" RealName | sed -n 's/^ //g;2p'`,
-		{ encoding: 'utf8' }
-	).trim();
-}
 
 module.exports = function cornellNotes() {
 	return transformer;
@@ -112,7 +102,7 @@ module.exports = function cornellNotes() {
 			});
 		}
 
-		heading = [process.env.SCHOOLKIT_REAL_NAME || getRealName(), heading, getDate()].filter(x => !!x).join(', ');
+		heading = [process.env.SCHOOLKIT_REAL_NAME, heading, getDate()].filter(x => !!x).join(', ');
 		tree.children = [
 			{ type: 'html', value: `<style>${CSS}</style>` },
 			{
