@@ -1,5 +1,5 @@
 # Schoolkit
-## A Simple Toolkit for Managing Schoolwork, Designed for Ari
+## A Simple Toolkit for Managing Schoolwork
 
 I wanted an easy way to manage my schoolwork, so I wrote some bash scripts. These are them. They're very heavily customized to the way that I work, and as such are not guaranteed to work (or keep working) for anyone else. They may break at any time. You have been warned.
 
@@ -21,7 +21,7 @@ sn history new World War II # cd to ~/School/history and create/edit "YYYY-MM-DD
 sn new Adverbs # the subject can be ommited if you're already in the right dir
 sn ls # list notes
 sn latest # edit the latest note
-sn cornell [note.md] # render the note to HTML Cornell notes (defaults to latest note)
+sn cornell [note.md] # render the note to HTML Cornell notes (defaults to latest note, see below)
 ```
 
 ## Cornell Notes
@@ -31,7 +31,7 @@ I have to/like to take Cornell notes frequently, but I want to take notes in mar
 Here's the format in markdown:
 
 ```markdown
-#### Ari Porad, Class, Teacher <!-- the date will be added automagically -->
+#### Ari Porad, Class, Teacher
 
 # Title Goes Here
 
@@ -44,7 +44,7 @@ This is a summary of the thing which I'm taking notes on. Blah Blah Blah.
 	* What do you get when you multiply six by nine?
 ```
 
-Here's the output:
+Here's the output (the date is added automagically):
 
 ![Cornell Notes Example Output](cornell_example.png)
 
