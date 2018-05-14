@@ -5,6 +5,8 @@ I wanted an easy way to manage my schoolwork, so I wrote some bash scripts. Thes
 
 ## Installation
 
+Schoolkit requires [`fzf`](https://github.com/junegunn/fzf), so please install it first. Schoolkit will probably explode on non-macOS devices.
+
 ```bash
 git clone https://github.com/ariporad/schoolkit.git ~/.schoolkit
 echo "[ -f ~/.schoolkit/index.sh ] && source ~/.schoolkit/index.sh" >> ~/.zshrc
@@ -17,12 +19,14 @@ Schoolkit expects schoolwork to be stored in `~/School/SUBJECT`. Within that fol
 The primary schoolkit command is (currently) `sn`, which stands for 'school notes'. Usage:
 
 ```bash
-sn history new World War II # cd to ~/School/history and create/edit "YYYY-MM-DD World War II.md"
+sn history new World War II # cd to ~/School/history and create + edit "YYYY-MM-DD World War II.md"
 sn new Adverbs # the subject can be ommited if you're already in the right dir
-sn ls # list notes
-sn latest # edit the latest note
-sn cornell [note.md] # render the note to HTML Cornell notes (defaults to latest note, see below)
-sn mla [note.md] # render the note to an MLA-formatted(ish) word document (defaults to latest note, see below)
+sn science list # list notes
+sn edit latest # edit the latest note
+sn english edit # prompt to select a note to edit
+sn english edit "2018-04-23 Grammar.md" # edit a specific note
+sn cornell [latest|note.md] # render the note to HTML Cornell notes (same filename behevior as `sn edit`, see below)
+sn mla [latest|note.md] # render the note to an MLA-formatted(ish) word document (same filename behevior as `sn edit`, see below)
 ```
 
 ## Cornell Notes
@@ -52,6 +56,9 @@ Here's the output (your name and the date are added automagically):
 ## MLA Formatting
 
 I like to write things in markdown for many reasons, but the academic world really likes things to be turned in with the MLA format. To facilitate this, schoolkit contains a method to convert markdown to something very close to MLA. (It doesn't have the teacher's name or the class in the header, but is otherwise correct.)
+
+## Caviats
+* Schoolkit occasionally needs to know your 'real' name (ex. `Ari Porad`, not `ariporad`). It tries to guess, but might not always be able to. If it can't figure yours out (or it gets it wrong), set `$SCHOOLKIT_REAL_NAME` to your name, and everything will work. (A `~/.bashrc` or `~/.zshrc` would be a good place to put this.)
 
 ## License
 [MIT License](https://ariporad.mit-license.org)
