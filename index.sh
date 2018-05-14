@@ -24,6 +24,18 @@ function __schoolkit_edit() {
 	fi
 }
 
+function __schoolkit_select_note() {
+	if [ -z "$1" ]; then
+		echo "$(__schoolkit_notes_list | fzf)"
+	else
+		if [ "$1" == "latest" ]; then
+			echo "$(__schoolkit_notes_list | head -1)"
+		else
+			echo "$1"
+		fi
+	fi
+}
+
 function __schoolkit_notes_new() {
 	filename="$(date +%Y-%m-%d) $@.md"
 	touch "$filename"
@@ -34,8 +46,8 @@ function __schoolkit_notes_list() {
 	ls | sort -nr
 }
 
-function __schoolkit_notes_latest() {
-	filename="$(__schoolkit_notes_list | head -1)"
+function __schoolkit_notes_edit() {
+	filename="$(__schoolkit_select_note "$1")"
 	# https://superuser.com/a/1002826
 	if [[ "${@#-p}" = "$@" ]]; then
 		__schoolkit_edit "$filename"
@@ -45,8 +57,7 @@ function __schoolkit_notes_latest() {
 }
 
 function __schoolkit_notes_cornell() {
-	latestnote="$(__schoolkit_notes_latest -p)"
-	filename="${1:-$latestnote}"
+	filename="$(__schoolkit_select_note "$1")"
 
 	export SCHOOLKIT_REAL_NAME="$(__schoolkit_get_real_name)"
 
@@ -59,8 +70,7 @@ function __schoolkit_notes_cornell() {
 }
 
 function __schoolkit_notes_mla() {
-	latestnote="$(__schoolkit_notes_latest -p)"
-	filename="${1:-$latestnote}"
+	filename="$(__schoolkit_select_note "$1")"
 	outputname="$(basename "$filename" ".md").docx"
 	prettydate="$(date -jf "%Y-%m-%d" "$(echo "$filename" | cut -d' ' -f1)" "+%B %d, %Y")"
 
@@ -77,17 +87,17 @@ function __schoolkit_notes_mla() {
 
 function sn() {
 	if [ $# -eq 0 ]; then
-		__schoolkit_notes_list "${@:2}"
+		__schoolkit_notes_list
 	else
 		case "$1" in
 			list)
 				__schoolkit_notes_list "${@:2}"
 				;;
-			latest)
-				__schoolkit_notes_latest "${@:2}"
-				;;
 			new)
 				__schoolkit_notes_new "${@:2}"
+				;;
+			edit)
+				__schoolkit_notes_edit "${@:2}"
 				;;
 			cornell)
 				__schoolkit_notes_cornell "${@:2}"
@@ -96,14 +106,16 @@ function sn() {
 				__schoolkit_notes_mla "${@:2}"
 				;;
 			help)
-				echo "Usage: $0 [class] ls|latest|mk|cornell|mla"
+				echo "Usage:"
+				echo "	$0 [class] list|new"
+				echo "	$0 [class] edit|cornell|mla [latest|filename.md]"
 				echo ""
 				echo "[class] - change to the class's folder before executing the command"
-				echo "ls - list notes"
-				echo "latest [-p] - __schoolkit_edit the most recent note (print the filename if -p)"
-				echo "mk ... - create a new note, using all remaining arguments as a name (spaces are OK!)"
-				echo "cornell [./path/to/note.md] - convert a markdown note to an HTML cornell note and open it in a browser. Defaults to the most recent note."
-				echo "mla [./path/to/note.md] - convert a markdown note to an MLA-formatted word document. Defaults to the most recent note."
+				echo "list - list notes"
+				echo "new ... - create a new note, using all remaining arguments as a name (spaces are OK!)"
+				echo "edit [latest|./path/to/note.md]- edit a note in \$EDITOR (currently $EDITOR). Defaults to prompting you to select a note. Pass 'latest' as the first argument to edit the latest note."
+				echo "cornell [latest|./path/to/note.md] - convert a markdown note to an HTML cornell note and open it in a browser. Defaults to prompting you to select a note. Pass 'latest' as the first argument to convert the latest note."
+				echo "mla [latest|./path/to/note.md] - convert a markdown note to an MLA-formatted word document. Defaults to prompting you to select a note. Pass 'latest' as the first argument to convert the latest note."
 				;;
 			*)
 				cd "$__schoolkit_work_dir/$1"
