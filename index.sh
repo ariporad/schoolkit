@@ -8,7 +8,7 @@ function __schoolkit_get_real_name() {
 	elif [[ "Darwin" == "$(uname)" ]]; then
 		dscl . -read "/Users/$(who am i | awk '{print $1}')" RealName | sed -n 's/^ //g;2p'
 	else
-		echo "Unable to detect real name!" >&2
+		echo "Unable to detect real name! Please set \$SCHOOLKIT_REAL_NAME to your real-world name." >&2
 	fi
 }
 
