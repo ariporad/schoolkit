@@ -3,7 +3,7 @@ __schoolkit_dir="$HOME/dev/schoolkit" # TODO: make sure this is right
 __schoolkit_work_dir="$HOME/School"
 
 function __schoolkit_get_real_name() {
-	if [ -z "$SCHOOLKIT_REAL_NAME" ]; then
+	if [ -n "$SCHOOLKIT_REAL_NAME" ]; then
 		echo "$SCHOOLKIT_REAL_NAME"
 	elif [[ "Darwin" == "$(uname)" ]]; then
 		dscl . -read "/Users/$(who am i | awk '{print $1}')" RealName | sed -n 's/^ //g;2p'
@@ -52,7 +52,7 @@ function __schoolkit_notes_cornell() {
 
 	dataurl="$(
 		cat "$filename" |
-		SCHOOLKIT_ NAME"$__schoolkit_dir/markdown-cornell/run.js" --data-uri
+		"$__schoolkit_dir/markdown-cornell/run.js" --data-uri
 	)" &&
 	osascript -e "tell application \"Safari\" to activate" &&
 	osascript -e "tell application \"Safari\" to open location \"$dataurl\""
