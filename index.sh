@@ -37,6 +37,10 @@ function __schoolkit_select_note() {
 }
 
 function __schoolkit_notes_new() {
+	if [ $# -eq 0 ]; then
+		echo "Please provide a title to \`sn new\`! Run \`sn help\` for more information."
+		return 1
+	fi
 	filename="$(date +%Y-%m-%d) $@.md"
 	touch "$filename"
 	__schoolkit_edit "$filename"
