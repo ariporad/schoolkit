@@ -47,7 +47,7 @@ function __schoolkit_notes_new() {
 }
 
 function __schoolkit_notes_list() {
-	ls | sort -nr
+	ls | sort -nr | "${PAGER:-less}"
 }
 
 function __schoolkit_notes_edit() {
