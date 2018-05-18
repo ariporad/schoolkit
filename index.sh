@@ -13,11 +13,12 @@ function __schoolkit_get_real_name() {
 }
 
 function __schoolkit_edit() {
+	editor="${SCHOOLKIT_EDITOR:-${EDITOR:-vim}}"
 	if [[ "${1: -3}" = ".md" ]] || [[ "${1: -4}" = ".txt" ]]; then
-		if [ "${EDITOR: -3}" = "vim" ]; then
-			$EDITOR "+Goyo" "$1"
+		if [ "${editor: -3}" = "vim" ]; then
+			$editor "+Goyo" "$1"
 		else
-			$EDITOR "$1"
+			$editor "$1"
 		fi
 	else
 		open "$1"
