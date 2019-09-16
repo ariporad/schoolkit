@@ -62,6 +62,7 @@ function __schoolkit_notes_edit() {
 }
 
 function __schoolkit_notes_cornell() {
+	browser="${SCHOOLKIT_BROWSER:-${BROWSER:-Google Chrome}}"
 	filename="$(__schoolkit_select_note "$1")"
 
 	export SCHOOLKIT_REAL_NAME="$(__schoolkit_get_real_name)"
@@ -70,8 +71,8 @@ function __schoolkit_notes_cornell() {
 		cat "$filename" |
 		"$__schoolkit_dir/markdown-cornell/run.js" --data-uri
 	)" &&
-	osascript -e "tell application \"Safari\" to activate" &&
-	osascript -e "tell application \"Safari\" to open location \"$dataurl\""
+	osascript -e "tell application \"$browser\" to activate" &&
+	osascript -e "tell application \"$browser\" to open location \"$dataurl\""
 }
 
 function __schoolkit_notes_mla() {
