@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 __schoolkit_dir="$HOME/dev/schoolkit" # TODO: make sure this is right
 __schoolkit_work_dir="$HOME/School"
 
