@@ -77,18 +77,27 @@ function __schoolkit_notes_cornell() {
 
 function __schoolkit_notes_mla() {
 	filename="$(__schoolkit_select_note "$1")"
+	bibname="$(basename "$filename" ".md").bib"
 	outputname="$(basename "$filename" ".md").docx"
 	prettydate="$(date -jf "%Y-%m-%d" "$(echo "$filename" | cut -d' ' -f1)" "+%B %d, %Y")"
 
-	pandoc \
-		--from=markdown \
-		--to=docx \
-		-M "author=$(__schoolkit_get_real_name)" \
-		-M "date=$prettydate" \
-		--reference-doc="$__schoolkit_dir/mla-reference.docx" \
-		-o "$outputname" \
-		"$filename" &&
-	open "$outputname"
+	pandoc_opts=(
+		--from=markdown
+		--to=docx
+		-M "author=$(__schoolkit_get_real_name)"
+		-M "date=$prettydate"
+		--reference-doc="$__schoolkit_dir/mla-reference.docx"
+	)
+
+	if [ -f "$bibname" ]; then
+		pandoc_opts += (
+			-M "bibliography=$bibname"
+			-M "csl=$__schoolkit_dir/mla.csl"
+			--filter pandoc-citeproc
+		)	
+	fi
+
+	pandoc $pandoc_opts -o "$outputname" "$filename" && open "$outputname"
 }
 
 function sn() {
@@ -121,7 +130,7 @@ function sn() {
 				echo "new ... - create a new note, using all remaining arguments as a name (spaces are OK!)"
 				echo "edit [latest|./path/to/note.md]- edit a note in \$EDITOR (currently $EDITOR). Defaults to prompting you to select a note. Pass 'latest' as the first argument to edit the latest note."
 				echo "cornell [latest|./path/to/note.md] - convert a markdown note to an HTML cornell note and open it in a browser. Defaults to prompting you to select a note. Pass 'latest' as the first argument to convert the latest note."
-				echo "mla [latest|./path/to/note.md] - convert a markdown note to an MLA-formatted word document. Defaults to prompting you to select a note. Pass 'latest' as the first argument to convert the latest note."
+				echo "mla [latest|./path/to/note.md] - convert a markdown note to an MLA-formatted word document. Defaults to prompting you to select a note. Pass 'latest' as the first argument to convert the latest note. Will ues a '.bib.' file with the same name if present."
 				;;
 			*)
 				cd "$__schoolkit_work_dir/$1"
